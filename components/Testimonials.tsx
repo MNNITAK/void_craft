@@ -24,7 +24,7 @@ export default function Testimonials() {
         <div className="grid gap-5 md:grid-cols-2">
           {testimonials.map((t, i) => (
             <Reveal key={t.name} delay={(i % 2) * 0.1} y={34}>
-              <figure className="group relative h-full overflow-hidden rounded-2xl border border-bone/[0.07] bg-void-card p-8 transition-all duration-500 hover:-translate-y-1 hover:border-volt/30">
+              <figure className="group relative h-full overflow-hidden rounded-2xl border border-white/10 bg-white/[0.06] p-8 shadow-[inset_0_1px_0_rgba(255,255,255,0.10)] backdrop-blur-xl backdrop-saturate-150 transition-all duration-500 hover:-translate-y-1 hover:border-volt/40">
                 <span
                   aria-hidden="true"
                   className="headline pointer-events-none absolute -right-2 -top-7 text-[7rem] font-semibold text-volt/10 transition-colors duration-500 group-hover:text-volt/20"
