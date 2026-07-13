@@ -23,7 +23,7 @@ function WordmarkLetter({
   return (
     <motion.span
       style={{ y, rotate, opacity, animationDelay: `${index * 0.35}s` }}
-      className="inline-block origin-bottom animate-[gradientDrift_9s_linear_infinite] bg-[linear-gradient(105deg,#0B4FFF,#7A2EFF,#FF4D2E,#7A2EFF,#0B4FFF)] bg-[length:300%_100%] bg-clip-text text-transparent will-change-transform"
+      className="inline-block origin-bottom animate-[gradientDrift_9s_linear_infinite] bg-[linear-gradient(105deg,#16161A,#33333A,#8E8E98,#33333A,#16161A)] bg-[length:300%_100%] bg-clip-text text-transparent will-change-transform"
     >
       {letter}
     </motion.span>
@@ -38,7 +38,7 @@ function FooterWordmark({ p }: { p: MotionValue<number> }) {
     <div className="relative -mb-[1vw] overflow-hidden">
       <p
         aria-hidden="true"
-        className="headline flex select-none justify-center whitespace-nowrap text-center text-[16.5vw] font-semibold leading-none tracking-[-0.05em] [filter:drop-shadow(0_0_44px_rgba(11,79,255,0.35))]"
+        className="headline flex select-none justify-center whitespace-nowrap text-center text-[16.5vw] font-semibold leading-none tracking-[-0.05em] [filter:drop-shadow(0_0_40px_rgba(242,240,232,0.08))]"
       >
         {letters.map((l, i) => (
           <WordmarkLetter
