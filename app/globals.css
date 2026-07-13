@@ -115,6 +115,16 @@ body {
   }
 }
 
+/* drifting gradient for the decisions headline */
+@keyframes gradientDrift {
+  from {
+    background-position: 0% 50%;
+  }
+  to {
+    background-position: 220% 50%;
+  }
+}
+
 /* vertical stream for the decisions section */
 @keyframes streamY {
   from {
