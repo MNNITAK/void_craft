@@ -1,6 +1,58 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
+
+/* One letter of the giant wordmark — rises out of the floor, scrubbed by scroll. */
+function WordmarkLetter({
+  letter,
+  index,
+  total,
+  p,
+}: {
+  letter: string;
+  index: number;
+  total: number;
+  p: MotionValue<number>;
+}) {
+  const start = (index / total) * 0.5;
+  const y = useTransform(p, [start, start + 0.5], ["112%", "0%"]);
+  const rotate = useTransform(p, [start, start + 0.5], [12, 0]);
+  const opacity = useTransform(p, [start, start + 0.25], [0, 1]);
+
+  return (
+    <motion.span
+      style={{ y, rotate, opacity, animationDelay: `${index * 0.35}s` }}
+      className="inline-block origin-bottom animate-[gradientDrift_9s_linear_infinite] bg-[linear-gradient(105deg,#0B4FFF,#7A2EFF,#FF4D2E,#7A2EFF,#0B4FFF)] bg-[length:300%_100%] bg-clip-text text-transparent will-change-transform"
+    >
+      {letter}
+    </motion.span>
+  );
+}
+
+/* The giant aurora wordmark — assembles letter by letter at the page's end. */
+function FooterWordmark({ p }: { p: MotionValue<number> }) {
+  const letters = "VOIDCRAFT".split("");
+
+  return (
+    <div className="relative -mb-[1vw] overflow-hidden">
+      <p
+        aria-hidden="true"
+        className="headline flex select-none justify-center whitespace-nowrap text-center text-[16.5vw] font-semibold leading-none tracking-[-0.05em] [filter:drop-shadow(0_0_44px_rgba(11,79,255,0.35))]"
+      >
+        {letters.map((l, i) => (
+          <WordmarkLetter
+            key={i}
+            letter={l}
+            index={i}
+            total={letters.length}
+            p={p}
+          />
+        ))}
+      </p>
+    </div>
+  );
+}
 
 const columns = [
   {
@@ -30,8 +82,14 @@ const columns = [
 ];
 
 export default function Footer() {
+  const footerRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: footerRef,
+    offset: ["start 0.95", "end 1"],
+  });
+
   return (
-    <footer className="relative overflow-hidden bg-void pt-20">
+    <footer ref={footerRef} className="relative overflow-hidden bg-void pt-20">
       <div className="mx-auto max-w-shell px-5 sm:px-8">
         <div className="grid gap-12 pb-20 md:grid-cols-[1.2fr_repeat(3,0.6fr)]">
           <div>
@@ -76,19 +134,8 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* giant wordmark — rises as you reach the end */}
-      <div className="relative mx-auto max-w-shell overflow-hidden px-2">
-        <motion.p
-          aria-hidden="true"
-          initial={{ y: "42%", opacity: 0.6 }}
-          whileInView={{ y: "12%", opacity: 1 }}
-          viewport={{ margin: "0px 0px -60px 0px" }}
-          transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
-          className="headline select-none whitespace-nowrap text-center text-[17.5vw] font-semibold leading-none tracking-tight text-bone/[0.06] lg:text-[15.2rem]"
-        >
-          voidcraft
-        </motion.p>
-      </div>
+      {/* giant wordmark — assembles from the floor as you reach the end */}
+      <FooterWordmark p={scrollYProgress} />
     </footer>
   );
 }
