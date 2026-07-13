@@ -1,105 +1,65 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll } from "framer-motion";
 import { caseStudies, type CaseStudy } from "@/lib/data";
 import Reveal from "@/components/motion/Reveal";
 import SectionLabel from "@/components/ui/SectionLabel";
 import ProjectVisual from "@/components/visuals/ProjectVisual";
 
-/* Short mono captions that sit on each connector line, Auxia-style. */
-const wireLabels = [
-  "ANSWERING EVERY CALL",
-  "CHASING EVERY LEAD",
-  "WATCHING THE WHOLE OPERATION",
-  "TAKING EVERY ORDER",
-  "SCREENING EVERY CV",
-];
-
 /**
- * Blue elbow connector that draws itself as it scrolls into view.
- * Runs from the previous block (top center) down to the next pill,
- * with a mono caption sitting on the horizontal run.
+ * One stop on the journey, Auxia-style: the wire runs down a left rail,
+ * the volt pill sits on the wire with its hook underneath, and the
+ * showcase card fills the space to the right.
  */
-function Connector({
-  side,
-  label,
-}: {
-  side: "left" | "right";
-  label: string;
-}) {
+function JourneyStep({ study, index }: { study: CaseStudy; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start 0.92", "start 0.45"],
+    offset: ["start 0.9", "center 0.4"],
   });
-  const pathLength = useTransform(scrollYProgress, [0, 1], [0, 1]);
-  const labelOpacity = useTransform(scrollYProgress, [0.45, 0.75], [0, 1]);
+  const side: "left" | "right" = index % 2 === 0 ? "left" : "right";
 
-  const d =
-    side === "left"
-      ? "M600 0 V50 Q600 74 576 74 H184 Q160 74 160 98 V140"
-      : "M600 0 V50 Q600 74 624 74 H1016 Q1040 74 1040 98 V140";
-
-  return (
-    <div ref={ref} className="relative hidden h-36 lg:block" aria-hidden="true">
-      <svg
-        className="absolute inset-0 h-full w-full"
-        viewBox="0 0 1200 140"
-        preserveAspectRatio="none"
-        fill="none"
-      >
-        <motion.path
-          d={d}
-          stroke="#0B4FFF"
-          strokeWidth="1.5"
-          vectorEffect="non-scaling-stroke"
-          style={{ pathLength }}
-        />
-      </svg>
-      <motion.span
-        style={{ opacity: labelOpacity }}
-        className="absolute left-1/2 top-[74px] -translate-x-1/2 -translate-y-1/2 bg-bone px-4 font-mono text-[10px] uppercase tracking-micro text-bone-ink/45"
-      >
-        {label}
-      </motion.span>
-    </div>
-  );
-}
-
-/** The volt step pill with its hook line underneath. */
-function StepPill({
-  study,
-  index,
-  side,
-}: {
-  study: CaseStudy;
-  index: number;
-  side: "left" | "right";
-}) {
   return (
     <div
-      className={`flex flex-col gap-4 lg:max-w-xs ${
-        side === "right" ? "lg:ml-auto lg:items-end lg:text-right" : ""
-      }`}
+      ref={ref}
+      className="relative pt-14 lg:grid lg:grid-cols-[280px_1fr] lg:items-start lg:gap-12 lg:pt-0 lg:pb-24"
     >
-      <motion.div
-        initial={{ opacity: 0, scale: 0.85 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-        className="inline-flex items-center gap-2.5 self-start rounded-full bg-volt px-6 py-3.5 text-sm font-medium text-white shadow-[0_16px_48px_-16px_rgba(11,79,255,0.7)] data-[side=right]:self-end"
-        data-side={side}
-      >
-        <span aria-hidden="true">✦</span>
-        {study.tag}
-      </motion.div>
-      <Reveal delay={0.15} y={18}>
-        <p className="text-sm leading-relaxed text-bone-ink/60">{study.hook}</p>
-        <p className="mt-2 font-mono text-[10px] uppercase tracking-micro text-bone-ink/40">
-          {study.client}
-        </p>
-      </Reveal>
+      {/* wire rail — grey track, volt fill drawn by scroll */}
+      <div className="relative mb-10 lg:mb-0 lg:self-stretch">
+        <div
+          aria-hidden="true"
+          className="absolute inset-y-0 left-1/2 hidden w-px -translate-x-1/2 bg-bone-ink/10 lg:block"
+        />
+        <motion.div
+          aria-hidden="true"
+          style={{ scaleY: scrollYProgress }}
+          className="absolute inset-y-0 left-1/2 hidden w-[2px] origin-top -translate-x-1/2 bg-volt lg:block"
+        />
+
+        <div className="relative flex flex-col items-center gap-5 text-center lg:pt-12">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.85 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+            className="inline-flex items-center gap-2.5 rounded-full bg-volt px-7 py-3.5 text-sm font-medium text-white shadow-[0_16px_48px_-16px_rgba(11,79,255,0.7)]"
+          >
+            <span aria-hidden="true">✦</span>
+            {study.tag}
+          </motion.div>
+          <Reveal delay={0.15} y={18} className="bg-bone px-2 py-1">
+            <p className="mx-auto max-w-[250px] text-sm leading-relaxed text-bone-ink/60">
+              {study.hook}
+            </p>
+            <p className="mt-2 font-mono text-[10px] uppercase tracking-micro text-bone-ink/40">
+              {study.client}
+            </p>
+          </Reveal>
+        </div>
+      </div>
+
+      <ShowcasePanel study={study} side={side} />
     </div>
   );
 }
@@ -281,21 +241,10 @@ export default function ProjectJourney() {
         </div>
 
         {/* the journey */}
-        <div className="mt-6">
-          {caseStudies.map((study, i) => {
-            const side: "left" | "right" = i % 2 === 0 ? "left" : "right";
-            return (
-              <div key={study.id}>
-                <Connector side={side} label={wireLabels[i] ?? study.tag} />
-                {/* mobile spacer keeps rhythm where connectors are hidden */}
-                <div className="h-12 lg:hidden" aria-hidden="true" />
-                <div className="space-y-7">
-                  <StepPill study={study} index={i} side={side} />
-                  <ShowcasePanel study={study} side={side} />
-                </div>
-              </div>
-            );
-          })}
+        <div className="mt-8 lg:mt-20">
+          {caseStudies.map((study, i) => (
+            <JourneyStep key={study.id} study={study} index={i} />
+          ))}
         </div>
 
         {/* journey end — the reserved slot */}
@@ -309,20 +258,29 @@ function EndStop() {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start 0.95", "start 0.5"],
+    offset: ["start 0.95", "start 0.55"],
   });
-  const pathLength = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   return (
     <div className="text-center">
-      <div ref={ref} className="relative mx-auto hidden h-28 w-px lg:block" aria-hidden="true">
-        <svg className="absolute inset-0 h-full w-full overflow-visible" viewBox="0 0 2 112" fill="none">
+      {/* the wire leaves the rail and elbows to the centre for the last stop */}
+      <div
+        ref={ref}
+        className="relative mx-auto hidden h-32 lg:block"
+        aria-hidden="true"
+      >
+        <svg
+          className="absolute inset-0 h-full w-full"
+          viewBox="0 0 1200 128"
+          preserveAspectRatio="none"
+          fill="none"
+        >
           <motion.path
-            d="M1 0 V112"
+            d="M140 0 V52 Q140 76 164 76 H576 Q600 76 600 100 V128"
             stroke="#0B4FFF"
             strokeWidth="1.5"
             vectorEffect="non-scaling-stroke"
-            style={{ pathLength }}
+            style={{ pathLength: scrollYProgress }}
           />
         </svg>
       </div>
