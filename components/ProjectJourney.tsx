@@ -104,9 +104,56 @@ function StepPill({
   );
 }
 
+/* Deterministic starfield — same sky on server and client. */
+const STARS = Array.from({ length: 30 }, (_, i) => {
+  const frac = (n: number) => n - Math.floor(n);
+  const a = frac(Math.sin(i * 127.1 + 1) * 43758.5453);
+  const b = frac(Math.sin(i * 269.5 + 7) * 24634.6345);
+  return {
+    ax: a * 100,
+    ay: b * 100,
+    r: 1 + frac(a * 9.7) * 1.6,
+    o: 0.3 + frac(b * 5.3) * 0.55,
+    d: frac(a * 3.1) * 3.2,
+  };
+});
+
+/* Stars live in the "sky": the top band of the card plus the media half —
+   never over the story text, where they'd read as dust. */
+function Starfield({ side }: { side: "left" | "right" }) {
+  return (
+    <div aria-hidden="true" className="absolute inset-0">
+      {STARS.map((s, i) => {
+        const topBand = s.ay < 30;
+        const x = topBand
+          ? s.ax
+          : side === "left"
+            ? s.ax * 0.44
+            : 56 + s.ax * 0.44;
+        const y = topBand ? s.ay * 0.5 : 15 + (s.ay - 30) * 1.1;
+        return (
+          <span
+            key={i}
+            className="animate-pulse-soft absolute rounded-full bg-white"
+            style={{
+              left: `${x.toFixed(3)}%`,
+              top: `${y.toFixed(3)}%`,
+              width: `${s.r.toFixed(2)}px`,
+              height: `${s.r.toFixed(2)}px`,
+              opacity: Number(s.o.toFixed(2)),
+              animationDelay: `${s.d.toFixed(2)}s`,
+            }}
+          />
+        );
+      })}
+    </div>
+  );
+}
+
 /**
  * Compact showcase panel — media and story side by side so the whole
- * project fits in one viewport. Each project gets its own live visual.
+ * project fits in one viewport. Each project gets its own live visual,
+ * floating in a violet night sky with a pink bloom rising behind it.
  */
 function ShowcasePanel({
   study,
@@ -117,42 +164,55 @@ function ShowcasePanel({
 }) {
   return (
     <Reveal y={48}>
-      <article className="overflow-hidden rounded-3xl bg-void-card shadow-[0_48px_120px_-48px_rgba(10,10,12,0.6)] lg:grid lg:grid-cols-[0.95fr_1.05fr]">
+      <article className="group relative overflow-hidden rounded-3xl bg-[#120E1A] bg-[linear-gradient(180deg,rgba(88,28,135,0.32),rgba(18,14,26,0)_58%)] shadow-[0_40px_90px_-44px_rgba(50,20,90,0.5)] lg:grid lg:grid-cols-[0.95fr_1.05fr]">
+        {/* night sky — pink bloom over the media side + twinkling stars */}
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+          <div
+            className={`absolute -top-[34%] h-[72%] w-[84%] rounded-full opacity-80 blur-3xl transition-opacity duration-700 group-hover:opacity-100 ${
+              side === "right" ? "left-[32%]" : "-left-[16%]"
+            } bg-[radial-gradient(closest-side,rgba(253,230,255,0.95),rgba(240,171,252,0.6)_38%,rgba(168,85,247,0.32)_65%,transparent_85%)]`}
+          />
+          <Starfield side={side} />
+        </div>
+
         {/* media slot — bespoke animation now, real screenshot via study.image later */}
         <div
           className={`relative min-h-[300px] sm:min-h-[340px] lg:min-h-[440px] ${
             side === "right" ? "lg:order-2" : ""
           }`}
         >
-          <div
-            className={`absolute inset-2.5 overflow-hidden rounded-2xl lg:inset-3 ${
-              study.image ? "bg-void" : `bg-gradient-to-br ${study.hue}`
-            }`}
-          >
-            {study.image ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={study.image}
-                alt={`${study.title} — product screenshot`}
-                className="h-full w-full object-cover"
-              />
-            ) : (
-              <>
-                <div
-                  aria-hidden="true"
-                  className="dot-grid-volt absolute inset-0"
+          {/* lavender rim light + upward glow, GitHub-hero style */}
+          <div className="absolute inset-3 rounded-2xl bg-gradient-to-b from-fuchsia-100/50 via-purple-300/15 to-white/5 p-px shadow-[0_-30px_90px_-18px_rgba(216,180,254,0.5)] lg:inset-4">
+            <div
+              className={`relative h-full w-full overflow-hidden rounded-[15px] ${
+                study.image ? "bg-void" : `bg-gradient-to-br ${study.hue}`
+              }`}
+            >
+              {study.image ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={study.image}
+                  alt={`${study.title} — product screenshot`}
+                  className="h-full w-full object-cover"
                 />
-                <ProjectVisual id={study.id} events={study.events} />
-                <span className="absolute bottom-4 right-5 font-mono text-[9px] uppercase tracking-micro text-white/50">
-                  voidcraft / {study.id}
-                </span>
-              </>
-            )}
+              ) : (
+                <>
+                  <div
+                    aria-hidden="true"
+                    className="dot-grid-volt absolute inset-0"
+                  />
+                  <ProjectVisual id={study.id} events={study.events} />
+                  <span className="absolute bottom-4 right-5 font-mono text-[9px] uppercase tracking-micro text-white/50">
+                    voidcraft / {study.id}
+                  </span>
+                </>
+              )}
+            </div>
           </div>
         </div>
 
         {/* story */}
-        <div className="flex flex-col p-6 sm:p-8 lg:p-9">
+        <div className="relative flex flex-col p-6 sm:p-8 lg:p-9">
           <h3 className="headline text-2xl font-semibold text-bone sm:text-3xl">
             {study.title}
           </h3>
