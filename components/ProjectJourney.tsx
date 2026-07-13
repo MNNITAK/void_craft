@@ -8,9 +8,44 @@ import SectionLabel from "@/components/ui/SectionLabel";
 import ProjectVisual from "@/components/visuals/ProjectVisual";
 
 /**
- * One stop on the journey, Auxia-style: the wire runs down a left rail,
+ * The wire crossing the page between stops — the snake's turn.
+ * Drops from one rail, runs across, and lands on the opposite rail.
+ */
+function SnakeConnector({ from }: { from: "left" | "right" }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start 0.95", "end 0.5"],
+  });
+  const d =
+    from === "left"
+      ? "M140 0 V46 Q140 72 166 72 H1034 Q1060 72 1060 98 V176"
+      : "M1060 0 V46 Q1060 72 1034 72 H166 Q140 72 140 98 V176";
+
+  return (
+    <div ref={ref} className="relative hidden h-44 lg:block" aria-hidden="true">
+      <svg
+        className="absolute inset-0 h-full w-full"
+        viewBox="0 0 1200 176"
+        preserveAspectRatio="none"
+        fill="none"
+      >
+        <motion.path
+          d={d}
+          stroke="#0B4FFF"
+          strokeWidth="1.5"
+          vectorEffect="non-scaling-stroke"
+          style={{ pathLength: scrollYProgress }}
+        />
+      </svg>
+    </div>
+  );
+}
+
+/**
+ * One stop on the journey, Auxia-style: the wire runs down a side rail,
  * the volt pill sits on the wire with its hook underneath, and the
- * showcase card fills the space to the right.
+ * showcase card fills the rest. Rails alternate sides — the snake.
  */
 function JourneyStep({ study, index }: { study: CaseStudy; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -23,10 +58,18 @@ function JourneyStep({ study, index }: { study: CaseStudy; index: number }) {
   return (
     <div
       ref={ref}
-      className="relative pt-14 lg:grid lg:grid-cols-[280px_1fr] lg:items-start lg:gap-12 lg:pt-0 lg:pb-24"
+      className={`relative pt-14 lg:grid lg:items-start lg:gap-12 lg:pt-0 ${
+        side === "left"
+          ? "lg:grid-cols-[280px_1fr]"
+          : "lg:grid-cols-[1fr_280px]"
+      }`}
     >
       {/* wire rail — grey track, volt fill drawn by scroll */}
-      <div className="relative mb-10 lg:mb-0 lg:self-stretch">
+      <div
+        className={`relative mb-10 lg:mb-0 lg:self-stretch ${
+          side === "right" ? "lg:order-2" : ""
+        }`}
+      >
         <div
           aria-hidden="true"
           className="absolute inset-y-0 left-1/2 hidden w-px -translate-x-1/2 bg-bone-ink/10 lg:block"
@@ -243,23 +286,32 @@ export default function ProjectJourney() {
         {/* the journey */}
         <div className="mt-8 lg:mt-20">
           {caseStudies.map((study, i) => (
-            <JourneyStep key={study.id} study={study} index={i} />
+            <div key={study.id}>
+              <JourneyStep study={study} index={i} />
+              {i < caseStudies.length - 1 && (
+                <SnakeConnector from={i % 2 === 0 ? "left" : "right"} />
+              )}
+            </div>
           ))}
         </div>
 
         {/* journey end — the reserved slot */}
-        <EndStop />
+        <EndStop from={(caseStudies.length - 1) % 2 === 0 ? "left" : "right"} />
       </div>
     </section>
   );
 }
 
-function EndStop() {
+function EndStop({ from }: { from: "left" | "right" }) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start 0.95", "start 0.55"],
   });
+  const d =
+    from === "left"
+      ? "M140 0 V52 Q140 76 164 76 H576 Q600 76 600 100 V128"
+      : "M1060 0 V52 Q1060 76 1036 76 H624 Q600 76 600 100 V128";
 
   return (
     <div className="text-center">
@@ -276,7 +328,7 @@ function EndStop() {
           fill="none"
         >
           <motion.path
-            d="M140 0 V52 Q140 76 164 76 H576 Q600 76 600 100 V128"
+            d={d}
             stroke="#0B4FFF"
             strokeWidth="1.5"
             vectorEffect="non-scaling-stroke"
