@@ -9,7 +9,7 @@ export default function FinalCTA() {
   return (
     <section
       id="contact"
-      className="dot-grid-volt noise relative overflow-hidden bg-volt py-32 sm:py-44"
+      className="aurora noise relative overflow-hidden py-32 sm:py-44"
     >
       {/* drawn circuit line */}
       <svg
@@ -39,7 +39,8 @@ export default function FinalCTA() {
         />
       </svg>
 
-      <div className="relative mx-auto max-w-shell px-5 text-center sm:px-8">
+      <div className="relative mx-auto max-w-shell px-5 sm:px-8">
+        <div className="glass-panel mx-auto max-w-4xl rounded-[2.5rem] px-6 py-16 text-center sm:px-16 sm:py-20">
         <Reveal>
           <span className="font-mono text-[11px] uppercase tracking-micro text-white/70">
             Next: your business
@@ -85,6 +86,7 @@ export default function FinalCTA() {
             Response within 48h · No discovery-call maze · NDA on request
           </p>
         </Reveal>
+        </div>
       </div>
     </section>
   );
