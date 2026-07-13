@@ -127,7 +127,11 @@ export default function Hero() {
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute bottom-0 right-[-10%] h-[420px] w-[520px] rounded-full bg-volt-deep/10 blur-[140px] animate-drift"
+        className="pointer-events-none absolute bottom-0 right-[-10%] h-[420px] w-[520px] rounded-full bg-[#7A2EFF]/10 blur-[140px] animate-drift"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute bottom-[-15%] left-[-8%] h-[380px] w-[480px] rounded-full bg-signal/[0.07] blur-[150px]"
       />
 
       <PipelinePath />
