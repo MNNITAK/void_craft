@@ -11,15 +11,15 @@ function StreamRow({
   action: string;
 }) {
   return (
-    <div className="flex items-center gap-5 py-[13px]">
-      <span className="w-56 shrink-0 font-mono text-[11px] uppercase tracking-wider text-mist/45 sm:w-72">
+    <div className="flex items-center gap-3 py-[13px] sm:gap-5">
+      <span className="w-24 shrink-0 truncate font-mono text-[10px] uppercase tracking-wider text-mist/45 min-[420px]:w-32 sm:w-72 sm:text-[11px]">
         {trigger}
       </span>
       <span
         aria-hidden="true"
-        className="h-px flex-1 border-t border-dashed border-bone/[0.08]"
+        className="h-px min-w-2 flex-1 border-t border-dashed border-bone/[0.08]"
       />
-      <span className="shrink-0 rounded-md border border-volt/40 bg-volt/15 px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-volt-soft">
+      <span className="shrink-0 whitespace-nowrap rounded-md border border-volt/40 bg-volt/15 px-2 py-1 font-mono text-[9px] uppercase tracking-wider text-volt-soft sm:px-2.5 sm:text-[10px]">
         <span aria-hidden="true" className="mr-1.5 text-volt-soft">
           ◆
         </span>
