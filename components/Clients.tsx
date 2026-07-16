@@ -7,7 +7,7 @@ export default function Clients() {
       <div className="mx-auto max-w-shell px-5 sm:px-8">
         <Reveal>
           <p className="mb-8 text-center font-mono text-[11px] uppercase tracking-micro text-mist/70">
-            Trusted by operators who measure results
+            100+ businesses automated across India — in these industries
           </p>
         </Reveal>
       </div>

@@ -79,7 +79,7 @@ export default function DecisionStream() {
   return (
     <section
       className="relative overflow-hidden bg-[#101012] py-10"
-      aria-label="Automated decisions served"
+      aria-label="Businesses running on Void Craft systems"
     >
       <div className="relative mx-auto h-[130vh] min-h-[720px] max-w-shell px-5 sm:px-8">
         {/* streaming rows */}
@@ -112,7 +112,7 @@ export default function DecisionStream() {
 
         {/* the stat */}
         <div className="relative flex h-full flex-col items-center justify-center text-center">
-          <BlurRevealStat text="2.4 million" />
+          <BlurRevealStat text="100+" />
           <motion.span
             initial={{ opacity: 0, y: 26, filter: "blur(12px)" }}
             whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -120,7 +120,7 @@ export default function DecisionStream() {
             transition={{ duration: 0.9, delay: 0.65, ease: [0.16, 1, 0.3, 1] }}
             className="headline mt-2 block text-3xl font-medium text-bone sm:text-5xl"
           >
-            decisions automated and counting
+            businesses automated across India
           </motion.span>
           <motion.span
             initial={{ opacity: 0, filter: "blur(8px)" }}
@@ -129,7 +129,8 @@ export default function DecisionStream() {
             transition={{ duration: 0.8, delay: 1, ease: "easeOut" }}
             className="mt-6 font-mono text-[11px] uppercase tracking-micro text-mist/60"
           >
-            Across every system Void Craft has in production
+            Dental chains to cloud kitchens — real systems making decisions
+            every day
           </motion.span>
         </div>
       </div>

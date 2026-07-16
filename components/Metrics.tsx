@@ -6,7 +6,7 @@ export default function Metrics() {
   return (
     <section className="relative bg-bone py-24 text-bone-ink sm:py-32">
       <div className="mx-auto max-w-shell px-5 sm:px-8">
-        <div className="grid grid-cols-2 gap-x-6 gap-y-14 md:grid-cols-5">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-14 md:grid-cols-4">
           {metrics.map((metric, i) => (
             <Reveal key={metric.label} delay={i * 0.08} className="text-center md:text-left">
               <div className="headline text-5xl font-semibold sm:text-6xl">
