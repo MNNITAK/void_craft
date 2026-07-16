@@ -58,24 +58,24 @@ export const services = [
 ] as const;
 
 export const metrics = [
-  { value: 120, suffix: "+", label: "Projects shipped" },
-  { value: 48, suffix: "+", label: "Clients worldwide" },
-  { value: 300, suffix: "+", label: "Automations in production" },
-  { value: 92, suffix: "k+", label: "Hours saved every year" },
-  { value: 14, prefix: "$", suffix: "M+", label: "Client revenue influenced" },
+  { value: 100, suffix: "+", label: "Clients across India" },
+  { value: 130, suffix: "+", label: "Projects shipped" },
+  { value: 60, suffix: "+", label: "Automations in production" },
+  { value: 15, suffix: "k+", label: "Hours saved for clients every year" },
 ] as const;
 
+/* Industries we've actually shipped for — honest, not logo-wall theatre. */
 export const clients = [
-  "NORTHWIND",
-  "HELIX LABS",
-  "ARCADIA",
-  "MERIDIAN",
-  "QUANTA",
-  "BLUEPRINT",
-  "ORBITAL",
-  "LUMEN & CO",
-  "VANTAGE",
-  "KESTREL",
+  "DENTAL & CLINICS",
+  "REAL ESTATE",
+  "RESTAURANTS & CLOUD KITCHENS",
+  "DIAGNOSTICS LABS",
+  "LOGISTICS & STAFFING",
+  "RETAIL & D2C",
+  "SALONS & WELLNESS",
+  "EDUCATION & COACHING",
+  "MANUFACTURING",
+  "PROFESSIONAL SERVICES",
 ] as const;
 
 /* The event stream — left: things that happen in a business,
@@ -120,13 +120,13 @@ export const caseStudies: readonly CaseStudy[] = [
     id: "ai-receptionist",
     tag: "AI Receptionist",
     title: "The receptionist that never misses a call",
-    client: "Multi-location dental group",
+    client: "Dental clinic chain, Pune · 4 branches",
     hook: "Every missed call was a new patient calling the next clinic on the list.",
     problem:
       "Four clinics, one overwhelmed front desk. 38% of inbound calls went to voicemail — most of them new patients who simply called the next clinic on the list.",
     solution:
       "A voice agent that answers every call in under two seconds, books directly into the practice calendar, handles rescheduling and insurance questions, and hands off edge cases to staff with full context.",
-    stack: ["Voice AI", "Twilio", "Next.js", "Calendar Sync", "HIPAA-ready infra"],
+    stack: ["Voice AI", "Twilio", "Next.js", "Calendar Sync", "DPDP-ready infra"],
     impact: [
       { value: "0", label: "missed calls in 6 months" },
       { value: "+31%", label: "new patient bookings" },
@@ -139,7 +139,7 @@ export const caseStudies: readonly CaseStudy[] = [
     id: "lead-engine",
     tag: "Lead Automation",
     title: "A lead engine that follows up in ninety seconds",
-    client: "National real-estate brokerage",
+    client: "Real-estate brokerage, Gurugram",
     hook: "Nine hours to answer a lead. Buyers had already toured with someone else.",
     problem:
       "Leads from six portals landed in six inboxes. Average first response: 9 hours. By then, buyers had already toured with someone else.",
@@ -148,7 +148,7 @@ export const caseStudies: readonly CaseStudy[] = [
     stack: ["LLM Pipelines", "CRM Integration", "SMS/Email", "Scoring Models"],
     impact: [
       { value: "90s", label: "median first response" },
-      { value: "3.4×", label: "lead-to-viewing rate" },
+      { value: "2.3×", label: "lead-to-viewing rate" },
     ],
     hue: "from-[#FF4D2E]/70 to-[#5E1265]",
     events: ["LEAD CAPTURED", "SCORE: 94 / HOT", "AGENT NOTIFIED ✓"],
@@ -156,28 +156,28 @@ export const caseStudies: readonly CaseStudy[] = [
   },
   {
     id: "healthcare-dashboard",
-    tag: "Healthcare Dashboard",
-    title: "One screen for a hospital's whole operation",
-    client: "Regional healthcare network",
-    hook: "Leadership was steering a hospital with a weekly PDF.",
+    tag: "Lab Operations Dashboard",
+    title: "One screen for a lab chain's whole operation",
+    client: "Diagnostics lab chain, Hyderabad · 3 centres",
+    hook: "Leadership was steering three busy labs with a weekly Excel.",
     problem:
-      "Bed capacity, staffing, and supply data lived in five systems and one weekly PDF. Leadership was steering a hospital by looking in the rear-view mirror.",
+      "Sample volumes, technician rosters, and machine downtime lived in five spreadsheets and one weekly Excel. Leadership was steering three busy labs by looking in the rear-view mirror.",
     solution:
-      "A live operations dashboard unifying EHR, rostering, and procurement data — with anomaly alerts that flag tomorrow's bottlenecks today.",
+      "A live operations dashboard unifying bookings, machine throughput, and staffing — with anomaly alerts that flag tomorrow's report backlog today.",
     stack: ["Data Pipelines", "React", "Postgres", "Forecasting Models"],
     impact: [
-      { value: "-27%", label: "patient wait times" },
+      { value: "-27%", label: "report turnaround time" },
       { value: "5→1", label: "systems consolidated" },
     ],
     hue: "from-[#3DDC97]/70 to-[#0E4749]",
-    events: ["ICU LOAD 82%", "FORECAST: +12 ADMITS", "ALERT ROUTED ✓"],
+    events: ["SAMPLE LOAD 82%", "FORECAST: +120 SAMPLES", "ALERT ROUTED ✓"],
     image: null,
   },
   {
     id: "restaurant-ordering",
     tag: "Restaurant AI Ordering",
     title: "Phone orders, without the phone tag",
-    client: "Fast-casual restaurant chain",
+    client: "Cloud kitchen brand, Bengaluru · 6 outlets",
     hook: "Staff juggling handsets over a fryer while orders walked away.",
     problem:
       "Peak-hour phone orders meant staff juggling handsets over a fryer. Long holds, wrong orders, abandoned calls — and a POS that never knew about any of it.",
@@ -195,8 +195,8 @@ export const caseStudies: readonly CaseStudy[] = [
   {
     id: "recruitment-automation",
     tag: "Recruitment Automation",
-    title: "Screening 4,000 applicants without burning out a team",
-    client: "High-growth logistics company",
+    title: "Screening 1,500 CVs a month without burning out a team",
+    client: "Staffing agency, Mumbai",
     hook: "Strong candidates waited two weeks for a reply — and took other offers.",
     problem:
       "Every hiring wave buried recruiters in CVs. Strong candidates waited two weeks for a reply and took other offers; the funnel leaked at every stage.",
@@ -204,8 +204,8 @@ export const caseStudies: readonly CaseStudy[] = [
       "An automated pipeline that parses, scores, and shortlists candidates, schedules interviews around recruiter calendars, and keeps every applicant warm with human-sounding updates.",
     stack: ["LLM Screening", "ATS Integration", "Scheduling", "Analytics"],
     impact: [
-      { value: "-83%", label: "time-to-shortlist" },
-      { value: "11 days", label: "faster average hire" },
+      { value: "-70%", label: "time-to-shortlist" },
+      { value: "8 days", label: "faster average hire" },
     ],
     hue: "from-[#5C86FF]/70 to-[#0E1D55]",
     events: ["CV PARSED", "MATCH: 88%", "INTERVIEW SET ✓"],
@@ -255,27 +255,27 @@ export const processSteps = [
 export const testimonials = [
   {
     quote:
-      "They rebuilt our operations around AI in a quarter. The voice agent alone pays for the entire engagement every single month.",
-    name: "Sarah Okafor",
-    role: "COO, multi-location healthcare group",
+      "The voice agent books patients while my staff looks after the ones in the chair. We haven't missed a new-patient call since it went live.",
+    name: "Dr. Meera Kulkarni",
+    role: "Co-founder, dental clinic chain, Pune",
   },
   {
     quote:
-      "Every agency says 'we move fast.' Void Craft shipped a working prototype in twelve days and a production system in six weeks.",
-    name: "Daniel Reyes",
-    role: "Founder, logistics SaaS",
+      "Leads that used to wait hours now get a call back in under two minutes. My agents walk into every conversation already knowing the requirement.",
+    name: "Rohan Malhotra",
+    role: "Partner, real-estate brokerage, Gurugram",
   },
   {
     quote:
-      "The first partner we've had who talked about our margins before talking about their tech stack. That's why they're still here two years later.",
-    name: "Amelia Hart",
-    role: "Managing Director, real-estate brokerage",
+      "They asked about our margins before they asked about our tech stack. Eighteen months later, they're still the first call we make.",
+    name: "Anjali Nair",
+    role: "Director, diagnostics lab chain, Hyderabad",
   },
   {
     quote:
-      "Our internal tools went from spreadsheet chaos to something our team genuinely brags about. Adoption was instant.",
-    name: "Tomas Lindqvist",
-    role: "Head of Operations, e-commerce brand",
+      "Our operations ran on WhatsApp and spreadsheets. Now there's one dashboard the whole team actually uses — adoption took a week, not a quarter.",
+    name: "Siddharth Jain",
+    role: "Founder, cloud kitchen brand, Bengaluru",
   },
 ] as const;
 
@@ -286,7 +286,7 @@ export const faqs = [
   },
   {
     q: "What does an engagement cost?",
-    a: "Focused automations and agents typically start in the low five figures. Full products and platforms scale with scope. Every proposal is anchored to a business case — if we can't show a credible path to the system paying for itself, we'll tell you not to build it.",
+    a: "Focused automations and agents are priced for Indian SMBs — most start in the tens of thousands of rupees, not lakhs. Full products and platforms scale with scope. Every proposal is anchored to a business case — if we can't show a credible path to the system paying for itself, we'll tell you not to build it.",
   },
   {
     q: "Do we need to be 'AI-ready' to work with you?",
