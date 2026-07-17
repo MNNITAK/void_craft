@@ -45,6 +45,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
+    site: "@VoidCraft06",
+    creator: "@VoidCraft06",
     title: "Void Craft — Building Intelligent Businesses",
     description:
       "The AI and software agency behind intelligent businesses.",

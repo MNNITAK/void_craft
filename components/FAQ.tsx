@@ -96,10 +96,10 @@ export default function FAQ() {
             <p className="mt-6 max-w-sm text-base leading-relaxed text-mist">
               Anything else? Ask a human —{" "}
               <a
-                href="mailto:hello@voidcraft.agency"
+                href="mailto:voidcraft.admin@gmail.com"
                 className="text-bone underline decoration-volt/60 underline-offset-4 transition-colors hover:text-volt-soft"
               >
-                hello@voidcraft.agency
+                voidcraft.admin@gmail.com
               </a>
             </p>
           </Reveal>

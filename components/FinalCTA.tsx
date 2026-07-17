@@ -65,7 +65,7 @@ export default function FinalCTA() {
           <div className="mt-11 flex flex-wrap items-center justify-center gap-4">
             <Magnetic strength={0.3}>
               <a
-                href="mailto:hello@voidcraft.agency"
+                href="mailto:voidcraft.admin@gmail.com"
                 className="group inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 text-base font-medium text-bone-ink transition-transform duration-300 hover:scale-[1.03]"
               >
                 Start a project
@@ -73,10 +73,10 @@ export default function FinalCTA() {
               </a>
             </Magnetic>
             <a
-              href="mailto:hello@voidcraft.agency"
+              href="mailto:voidcraft.admin@gmail.com"
               className="rounded-full border border-white/30 px-8 py-4 text-base text-white transition-colors duration-300 hover:border-white/70 hover:bg-white/10"
             >
-              hello@voidcraft.agency
+              voidcraft.admin@gmail.com
             </a>
           </div>
         </Reveal>

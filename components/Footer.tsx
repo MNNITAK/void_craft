@@ -67,15 +67,15 @@ const columns = [
   {
     heading: "Connect",
     links: [
-      { label: "LinkedIn", href: "#" },
-      { label: "X / Twitter", href: "#" },
-      { label: "GitHub", href: "#" },
+      { label: "X / Twitter", href: "https://x.com/VoidCraft06" },
+      { label: "Reddit", href: "https://www.reddit.com/u/void_craft06/s/5vEo5p7aBR" },
+      { label: "Gmail", href: "mailto:voidcraft.admin@gmail.com" },
     ],
   },
   {
     heading: "Contact",
     links: [
-      { label: "hello@voidcraft.agency", href: "mailto:hello@voidcraft.agency" },
+      { label: "voidcraft.admin@gmail.com", href: "mailto:voidcraft.admin@gmail.com" },
       { label: "Start a project", href: "#contact" },
     ],
   },
@@ -117,6 +117,9 @@ export default function Footer() {
                   <li key={link.label}>
                     <a
                       href={link.href}
+                      {...(link.href.startsWith("http")
+                        ? { target: "_blank", rel: "noopener noreferrer" }
+                        : {})}
                       className="text-sm text-bone/70 transition-colors duration-200 hover:text-volt-soft"
                     >
                       {link.label}
