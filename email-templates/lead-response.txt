@@ -1,0 +1,24 @@
+Subject: Thanks, {{first_name}} — your Void Craft brief is in
+
+Hi {{first_name}},
+
+Thanks for reaching out. We've read your note about {{project_line}}
+for {{company}}, and it's exactly the kind of problem we like to build for.
+
+Here's what happens next — no discovery-call maze, no filler:
+
+  01 · Within 48 hours — a short written response with our read on the
+       problem and how we'd approach it.
+  02 · A 30-min Google Meet — we walk through scope, timeline and a
+       realistic cost. Book a slot here: {{meet_link}}
+  03 · A build plan — the system, the numbers behind it, and week-one value.
+
+Prefer email? Just reply to this message. NDA on request.
+
+{{sender_name}}
+{{sender_role}} · Void Craft
+voidcraft.admin@gmail.com
+
+—
+© 2026 Void Craft · India · AI, software & automation
+X: https://x.com/VoidCraft06 · Reddit: https://www.reddit.com/u/void_craft06
