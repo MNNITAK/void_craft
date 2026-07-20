@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Magnetic from "@/components/motion/Magnetic";
+import { useContact } from "@/components/ContactProvider";
 
 const links = [
   { label: "Services", href: "#services" },
@@ -14,6 +15,7 @@ const links = [
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const { openForm } = useContact();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -66,12 +68,13 @@ export default function Nav() {
 
         <div className="hidden md:block">
           <Magnetic strength={0.3}>
-            <a
-              href="#contact"
+            <button
+              type="button"
+              onClick={openForm}
               className="inline-flex items-center gap-2 rounded-full bg-bone px-5 py-2.5 text-sm font-medium text-bone-ink transition-colors duration-300 hover:bg-volt hover:text-white"
             >
               Start a project
-            </a>
+            </button>
           </Magnetic>
         </div>
 
@@ -118,13 +121,16 @@ export default function Nav() {
                 {link.label}
               </a>
             ))}
-            <a
-              href="#contact"
-              onClick={() => setOpen(false)}
-              className="mt-2 block rounded-xl bg-volt px-4 py-3 text-center font-medium text-white"
+            <button
+              type="button"
+              onClick={() => {
+                setOpen(false);
+                openForm();
+              }}
+              className="mt-2 block w-full rounded-xl bg-volt px-4 py-3 text-center font-medium text-white"
             >
               Start a project
-            </a>
+            </button>
           </motion.nav>
         )}
       </AnimatePresence>

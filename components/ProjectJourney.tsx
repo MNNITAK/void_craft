@@ -6,6 +6,7 @@ import { caseStudies, type CaseStudy } from "@/lib/data";
 import Reveal from "@/components/motion/Reveal";
 import SectionLabel from "@/components/ui/SectionLabel";
 import ProjectVisual from "@/components/visuals/ProjectVisual";
+import { useContact } from "@/components/ContactProvider";
 
 /**
  * The wire crossing the page between stops — the snake's turn.
@@ -304,6 +305,7 @@ export default function ProjectJourney() {
 
 function EndStop({ from }: { from: "left" | "right" }) {
   const ref = useRef<HTMLDivElement>(null);
+  const { openForm } = useContact();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start 0.95", "start 0.55"],
@@ -338,8 +340,9 @@ function EndStop({ from }: { from: "left" | "right" }) {
       </div>
       <div className="h-10 lg:hidden" aria-hidden="true" />
       <Reveal>
-        <a
-          href="#contact"
+        <button
+          type="button"
+          onClick={openForm}
           className="group inline-flex flex-col items-center gap-5 rounded-3xl bg-bone-ink px-12 py-10 text-bone transition-colors duration-500 hover:bg-volt"
         >
           <span className="font-mono text-[10px] uppercase tracking-micro text-bone/60 group-hover:text-white/70">
@@ -357,7 +360,7 @@ function EndStop({ from }: { from: "left" | "right" }) {
               →
             </span>
           </span>
-        </a>
+        </button>
       </Reveal>
     </div>
   );

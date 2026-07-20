@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import WordReveal from "@/components/motion/WordReveal";
 import Button from "@/components/ui/Button";
+import { useContact } from "@/components/ContactProvider";
 
 /* Rotating "live system" feed — the original storytelling device:
    Void Craft systems quietly doing work while you read the headline. */
@@ -115,6 +116,7 @@ function PipelinePath() {
 }
 
 export default function Hero() {
+  const { openForm } = useContact();
   return (
     <section
       id="top"
@@ -173,7 +175,7 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 1.05, ease: [0.16, 1, 0.3, 1] }}
             className="mt-10 flex flex-wrap items-center gap-4"
           >
-            <Button href="#contact" size="lg" variant="volt">
+            <Button onClick={openForm} size="lg" variant="volt">
               Start a project
             </Button>
             <Button href="#work" size="lg" variant="ghost-dark">

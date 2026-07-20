@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Inter_Tight, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
+import ContactProvider from "@/components/ContactProvider";
 
 const interTight = Inter_Tight({
   subsets: ["latin"],
@@ -62,7 +63,9 @@ export default function RootLayout({
       <body
         className={`${interTight.variable} ${inter.variable} ${jetbrainsMono.variable} bg-void font-sans text-bone antialiased`}
       >
-        <SmoothScroll>{children}</SmoothScroll>
+        <ContactProvider>
+          <SmoothScroll>{children}</SmoothScroll>
+        </ContactProvider>
       </body>
     </html>
   );

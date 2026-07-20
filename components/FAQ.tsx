@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { faqs } from "@/lib/data";
 import Reveal from "@/components/motion/Reveal";
 import SectionLabel from "@/components/ui/SectionLabel";
+import { CONTACT_EMAIL, HELLO_GMAIL_URL } from "@/lib/contact";
 
 function FaqItem({
   faq,
@@ -96,10 +97,12 @@ export default function FAQ() {
             <p className="mt-6 max-w-sm text-base leading-relaxed text-mist">
               Anything else? Ask a human —{" "}
               <a
-                href="mailto:voidcraft.admin@gmail.com"
+                href={HELLO_GMAIL_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-bone underline decoration-volt/60 underline-offset-4 transition-colors hover:text-volt-soft"
               >
-                voidcraft.admin@gmail.com
+                {CONTACT_EMAIL}
               </a>
             </p>
           </Reveal>

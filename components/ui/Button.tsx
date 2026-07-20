@@ -6,6 +6,7 @@ import Magnetic from "@/components/motion/Magnetic";
 type ButtonProps = {
   children: ReactNode;
   href?: string;
+  onClick?: () => void;
   variant?: "volt" | "bone" | "ghost-dark" | "ghost-light";
   size?: "md" | "lg";
   className?: string;
@@ -31,6 +32,7 @@ const sizes: Record<NonNullable<ButtonProps["size"]>, string> = {
 export default function Button({
   children,
   href = "#contact",
+  onClick,
   variant = "volt",
   size = "md",
   className = "",
@@ -39,6 +41,14 @@ export default function Button({
     <Magnetic strength={0.25} className="inline-block">
       <a
         href={href}
+        onClick={
+          onClick
+            ? (e) => {
+                e.preventDefault();
+                onClick();
+              }
+            : undefined
+        }
         className={`${base} ${variants[variant]} ${sizes[size]} ${className}`}
       >
         {children}

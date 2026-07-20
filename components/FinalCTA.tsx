@@ -4,8 +4,11 @@ import { motion } from "framer-motion";
 import Reveal from "@/components/motion/Reveal";
 import WordReveal from "@/components/motion/WordReveal";
 import Magnetic from "@/components/motion/Magnetic";
+import { useContact } from "@/components/ContactProvider";
+import { CONTACT_EMAIL, HELLO_GMAIL_URL } from "@/lib/contact";
 
 export default function FinalCTA() {
+  const { openForm } = useContact();
   return (
     <section
       id="contact"
@@ -64,19 +67,22 @@ export default function FinalCTA() {
         <Reveal delay={0.35}>
           <div className="mt-11 flex flex-wrap items-center justify-center gap-4">
             <Magnetic strength={0.3}>
-              <a
-                href="mailto:voidcraft.admin@gmail.com"
+              <button
+                type="button"
+                onClick={openForm}
                 className="group inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 text-base font-medium text-bone-ink transition-transform duration-300 hover:scale-[1.03]"
               >
                 Start a project
                 <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
-              </a>
+              </button>
             </Magnetic>
             <a
-              href="mailto:voidcraft.admin@gmail.com"
+              href={HELLO_GMAIL_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="rounded-full border border-white/30 px-8 py-4 text-base text-white transition-colors duration-300 hover:border-white/70 hover:bg-white/10"
             >
-              voidcraft.admin@gmail.com
+              {CONTACT_EMAIL}
             </a>
           </div>
         </Reveal>

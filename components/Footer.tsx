@@ -2,6 +2,8 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
+import { useContact } from "@/components/ContactProvider";
+import { CONTACT_EMAIL, HELLO_GMAIL_URL } from "@/lib/contact";
 
 /* One letter of the giant wordmark — rises out of the floor, scrubbed by scroll. */
 function WordmarkLetter({
@@ -69,19 +71,20 @@ const columns = [
     links: [
       { label: "X / Twitter", href: "https://x.com/VoidCraft06" },
       { label: "Reddit", href: "https://www.reddit.com/u/void_craft06/s/5vEo5p7aBR" },
-      { label: "Gmail", href: "mailto:voidcraft.admin@gmail.com" },
+      { label: "Gmail", href: HELLO_GMAIL_URL },
     ],
   },
   {
     heading: "Contact",
     links: [
-      { label: "voidcraft.admin@gmail.com", href: "mailto:voidcraft.admin@gmail.com" },
-      { label: "Start a project", href: "#contact" },
+      { label: CONTACT_EMAIL, href: HELLO_GMAIL_URL },
+      { label: "Start a project", action: "form" as const },
     ],
   },
 ];
 
 export default function Footer() {
+  const { openForm } = useContact();
   const footerRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: footerRef,
@@ -115,15 +118,25 @@ export default function Footer() {
               <ul className="space-y-2.5">
                 {col.links.map((link) => (
                   <li key={link.label}>
-                    <a
-                      href={link.href}
-                      {...(link.href.startsWith("http")
-                        ? { target: "_blank", rel: "noopener noreferrer" }
-                        : {})}
-                      className="text-sm text-bone/70 transition-colors duration-200 hover:text-volt-soft"
-                    >
-                      {link.label}
-                    </a>
+                    {"action" in link ? (
+                      <button
+                        type="button"
+                        onClick={openForm}
+                        className="text-left text-sm text-bone/70 transition-colors duration-200 hover:text-volt-soft"
+                      >
+                        {link.label}
+                      </button>
+                    ) : (
+                      <a
+                        href={link.href}
+                        {...(link.href.startsWith("http")
+                          ? { target: "_blank", rel: "noopener noreferrer" }
+                          : {})}
+                        className="text-sm text-bone/70 transition-colors duration-200 hover:text-volt-soft"
+                      >
+                        {link.label}
+                      </a>
+                    )}
                   </li>
                 ))}
               </ul>
