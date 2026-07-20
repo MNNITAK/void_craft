@@ -122,7 +122,7 @@ export default function ContactProvider({ children }: { children: ReactNode }) {
       <AnimatePresence>
         {open && (
           <motion.div
-            className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto p-4 sm:items-center sm:p-6"
+            className="fixed inset-0 z-[100] overflow-y-auto"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -131,14 +131,16 @@ export default function ContactProvider({ children }: { children: ReactNode }) {
             aria-modal="true"
             aria-label="Start a project with Void Craft"
           >
-            {/* backdrop */}
+            {/* backdrop — fixed so it covers the viewport while the panel scrolls */}
             <div
-              className="absolute inset-0 bg-void/80 backdrop-blur-md"
+              className="fixed inset-0 bg-void/80 backdrop-blur-md"
               onClick={closeForm}
             />
 
+            {/* scroll + centering wrapper: min-h-full centres when short, grows & scrolls when tall */}
+            <div className="relative flex min-h-full items-center justify-center p-4 sm:p-6">
             <motion.div
-              className="glass-dark relative my-auto w-full max-w-lg overflow-hidden rounded-3xl border border-bone/10 bg-void/90 p-6 shadow-2xl sm:p-8"
+              className="glass-dark relative w-full max-w-lg overflow-hidden rounded-3xl border border-bone/10 bg-void/90 p-6 shadow-2xl sm:p-8"
               initial={{ opacity: 0, y: 28, scale: 0.97 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 20, scale: 0.98 }}
@@ -285,6 +287,7 @@ export default function ContactProvider({ children }: { children: ReactNode }) {
                 </div>
               )}
             </motion.div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
